@@ -2,6 +2,7 @@
 
 #include "../Includes/UART.h"
 
+uint8 uart_transmit_fifnish = 0;
 /***********************************************************************/
 /* Function name :- UART_init
  * Function job :- initialize uart
@@ -45,12 +46,17 @@ void UART0_init(void)
 /*Function inputs :- sending character                                                            */
 /*Function outputs :- N/A                                                                         */
 /**************************************************************************************************/
-void UART0_Transmit(uint8 data)
+void UART0_TransmitStart_task(uint8 data)
 {
     /* sending data by uart with out waiting for it */
     UARTCharPutNonBlocking(UART0_BASE,data);
+}
+
+void UART0_TransmitCheck(void){
     /* waith until data sent */
-    while(UARTBusy(UART0_BASE));
+    if(!UARTBusy(UART0_BASE)){
+
+    }
 }
 
 
