@@ -21,6 +21,7 @@
 #define SHIFT_SEVEN					7
 
 
-
+#define HIGH                        1
+#define LOW                         0
 
 #endif /* COMMONDEFINATIONS_H_ */
