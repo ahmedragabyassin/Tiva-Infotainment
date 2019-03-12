@@ -26,6 +26,16 @@
 #define NUM_32					32
 #define NULL_CHAR				'\0'
 
+#define NUM_1_CHAR              '1'
+#define NUM_2_CHAR              '2'
+#define NUM_3_CHAR              '3'
+#define NUM_4_CHAR              '4'
+#define NUM_5_CHAR              '5'
+#define NUM_6_CHAR              '6'
+#define NUM_7_CHAR              '7'
+#define NUM_8_CHAR              '8'
+#define NUM_9_CHAR              '9'
+
 #define ENABLE_CODE					1
 #define CLEAR_CODE					0
 
