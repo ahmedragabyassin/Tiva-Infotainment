@@ -9,8 +9,6 @@
 #define INCLUDES_LCD_CFG_H_
 
 
-
-
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
@@ -45,18 +43,13 @@
 /************************************************************************/
 /* LCD Config Pin                                                       */
 /************************************************************************/
-/**********************************************************************/
-/* define LCD PORTs BASE                                              */
-/**********************************************************************/
 
-#define LCD_CONT_PORT_BASE            GPIO_PORTA_BASE
-#define LCD_DATA_PORT_BASE            GPIO_PORTC_BASE
 /************************************************************************/
 /* LCD control pins                                                     */
 /************************************************************************/
 #define LCD_RS                  GPIO_PIN_2
 #define LCD_RW                  GPIO_PIN_3
-#define LCD_E                   GPIO_PIN_3
+#define LCD_E                   GPIO_PIN_4
 /************************************************************************/
 /* LCD Data pins                                                        */
 /************************************************************************/
@@ -68,6 +61,14 @@
 #define LCD_D5                  GPIO_PIN_5
 #define LCD_D6                  GPIO_PIN_6
 #define LCD_D7                  GPIO_PIN_7
+
+/**********************************************************************/
+/* define LCD PORTs BASE                                              */
+/**********************************************************************/
+
+#define LCD_CONT_PORT_BASE            GPIO_PORTA_BASE
+#define LCD_DATA_PORT_BASE            GPIO_PORTC_BASE
+
 
 /************************************************************************/
 /* To set cursor location                                               */
@@ -112,8 +113,13 @@
 #define LCD_BIT6                6
 #define LCD_BIT7                7
 
-
-
-
+#define ZERO_BITS                0b00000001
+#define ONE_BITS                 0b00000010
+#define TWO_BITS                 0b00000100
+#define THREE_BITS               0b00001000
+#define FOUR_BITS                0b00010000
+#define FIVE_BITS                0b00100000
+#define SIX_BITS                 0b01000000
+#define SEVEN_BITS               0b10000000
 
 #endif /* INCLUDES_LCD_CFG_H_ */

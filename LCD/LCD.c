@@ -28,7 +28,7 @@ void LCD_Init(void)
     {
     }
     /* Set pins 2 and 3 and 4 as output.*/
-    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, LCD_RS | LCD_E | LCD_RW);
+    GPIOPinTypeGPIOOutput(LCD_CONT_PORT_BASE, LCD_RS | LCD_E | LCD_RW);
 
     /*config data pins direction */
     /* Enable the GPIOA peripheral */
@@ -39,23 +39,17 @@ void LCD_Init(void)
    {
    }
    /* Set pins 4 and 5 and 6 and 7 as output.*/
-   GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, LCD_D4 | LCD_D5 | LCD_D6 | LCD_D7);
+   GPIOPinTypeGPIOOutput(LCD_DATA_PORT_BASE, LCD_D4 | LCD_D5 | LCD_D6 | LCD_D7);
 
     /* Initialize LCD in Four bits Mode and two lines */
     LCD_SendCommand(LCD_FOUR_BIT_TWO_LINE_MODE, CMD_MODE);
-    /* delay 1ms */
-    SysCtlDelay(2000);
     LCD_SendCommand(LCD_FOUR_BIT_DATA_MODE, CMD_MODE);
-    /* delay 1ms */
-    SysCtlDelay(2000);
     /* Clear LCD and set cursor at the beginning */
     LCD_SendCommand(LCD_CURSOR_ON, CMD_MODE);
-    SysCtlDelay(2000);
     LCD_SendCommand(LCD_CLEAR, CMD_MODE);
 
 
 }
-
 
 
 /************************************************************************/
@@ -65,7 +59,7 @@ void LCD_Init(void)
 /* return: void                                                         */
 /* Description: function take hexa command                              */
 /************************************************************************/
-void LCD_SendCommand(uint8 Command, uint8 type)
+void LCD_SendCommandData(uint8 Command, uint8 type)
 {
 
     /* Switch case to check if command mode or data mode */
@@ -78,16 +72,16 @@ void LCD_SendCommand(uint8 Command, uint8 type)
             /* RW set to write */
             GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_RW, LCD_RW);
             /* delay 1ms */
-            SysCtlDelay(2000);
+            SysCtlDelay(200);
             /* Set EN pin to high */
             GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_E, LCD_E);
             /* delay 1ms */
-            SysCtlDelay(2000);
+            SysCtlDelay(200);
                /* Send Command Most significant bit first */
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT4)));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT5)));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT6)));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT7)));
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT4)>>LCD_BIT4)<<LCD_BIT4);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT5)>>LCD_BIT4)<<LCD_BIT5);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT6)>>LCD_BIT4)<<LCD_BIT6);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT7)>>LCD_BIT4)<<LCD_BIT7);
 
                 /* delay 1ms */
             SysCtlDelay(2000);
@@ -100,17 +94,17 @@ void LCD_SendCommand(uint8 Command, uint8 type)
                 /* delay 1ms */
             SysCtlDelay(2000);
                 /*Send Least Significant bit */
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT1)<<LCD_BIT0));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT2)<<LCD_BIT1));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT3)<<LCD_BIT2));
-            GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT4)<<LCD_BIT3));
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT0)>>LCD_BIT0)<<LCD_BIT4);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT1)>>LCD_BIT1)<<LCD_BIT5);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT2)>>LCD_BIT2)<<LCD_BIT6);
+            GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT3)>>LCD_BIT3)<<LCD_BIT7);
 
                 /* delay 1ms */
-             SysCtlDelay(2000);
+             SysCtlDelay(200);
                 /* latch data by writing low on EN pin */
              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_E, LOW);
                 /* delay 1ms */
-             SysCtlDelay(2000);
+             SysCtlDelay(200);
                 break;
         case DATA_MODE:
                     /*Config Control Reg*/
@@ -125,10 +119,10 @@ void LCD_SendCommand(uint8 Command, uint8 type)
                     /* delay 1ms */
               SysCtlDelay(2000);
                        /* Send Command Most significant bit first */
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT4)));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT5)));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT6)));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT7)));
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT4)>>LCD_BIT4)<<LCD_BIT4);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT5)>>LCD_BIT4)<<LCD_BIT5);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT6)>>LCD_BIT4)<<LCD_BIT6);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT7)>>LCD_BIT4)<<LCD_BIT7);
 
                         /* delay 1ms */
               SysCtlDelay(2000);
@@ -142,12 +136,10 @@ void LCD_SendCommand(uint8 Command, uint8 type)
                         /* delay 1ms */
               SysCtlDelay(2000);
                         /*Send Least Significant bit */
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT1)<<LCD_BIT0));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT2)<<LCD_BIT1));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT3)<<LCD_BIT2));
-              GPIOPinWrite(LCD_CONT_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT4)<<LCD_BIT3));
-
-
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D4, (GET_BIT(Command,LCD_BIT0)>>LCD_BIT0)<<LCD_BIT4);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D5, (GET_BIT(Command,LCD_BIT1)>>LCD_BIT1)<<LCD_BIT5);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D6, (GET_BIT(Command,LCD_BIT2)>>LCD_BIT2)<<LCD_BIT6);
+              GPIOPinWrite(LCD_DATA_PORT_BASE, LCD_D7, (GET_BIT(Command,LCD_BIT3)>>LCD_BIT3)<<LCD_BIT7);
                         /* delay 1ms */
               SysCtlDelay(2000);
                         /* latch data by writing low on EN pin */
@@ -157,3 +149,5 @@ void LCD_SendCommand(uint8 Command, uint8 type)
               break;
     }
 }
+
+
