@@ -8,8 +8,6 @@
 #ifndef INCLUDES_LCD_H_
 #define INCLUDES_LCD_H_
 
-
-
 #include "BitwiseOperations.h"
 #include "types.h"
 #include "lcd_cfg.h"
@@ -33,15 +31,7 @@ void LCD_Init(void);
 /* return: void                                                         */
 /* Description: function take hexa command                              */
 /************************************************************************/
-void LCD_SendCommand(uint8 Command, uint8 type);
-
-/************************************************************************/
-/* Function: LCD Display character                                      */
-/* @param: data, character to be displayed on LCD                       */
-/* return: void                                                         */
-/* Description: function display charcter on LCD                        */
-/************************************************************************/
-void LCD_DisplayChar(uint8 Data);
+void LCD_SendCommandData(uint8 Command, uint8 type);
 
 /************************************************************************/
 /* Function: LCD Display String                                         */
@@ -105,7 +95,6 @@ void LCD_intgerToString(uint32 data);
 /* Description: Convert string to integer number                        */
 /************************************************************************/
 uint32 LCD_StringToIntger(uint8 data[]);
-
 
 
 
