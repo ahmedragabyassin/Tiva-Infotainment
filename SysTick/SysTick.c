@@ -47,5 +47,17 @@ void SysTick_INIT(uint32_t Tick )
 }
 
 
+/************************************************************************/
+/* Function: SysTickIntHandler                                          */
+/* @param: void                                                         */
+/* return: void                                                         */
+/* Description: Interrupt handler for the for Systick interrupt.                             */
+/************************************************************************/
+void
+SysTickIntHandler(void)
+{
+    /*Toggle LED*/
+    GPIOF->DATA^= TOGGLE_LED;
+}
 
 
