@@ -5,11 +5,18 @@
  *      Author: Ahmed Hamdy
  */
 
+#include <Includes/types.h>
 #include <stdint.h>
 #include "Includes/Systick.h"
 #include "Includes/TM4C123GH6PM.h"
 #include "inc/hw_types.h"
+#include "Includes/Scheduler.h"
 
+/*Array of pointer to functions which containes Tasks*/
+extern void(*ptr[MAX_TASK_NUMBER])(void);
+
+/*Pointer to function which we use in call back function principle*/
+void(*call_back)(void);
 
 /************************************************************************/
 /* Function: SysTick_INIT                                               */
@@ -19,15 +26,6 @@
 /************************************************************************/
 void SysTick_INIT(uint32_t Tick )
 {
-    /*Initialize PORTF*/
-
-    /*Enable clock to PortF*/
-    SYSCTL->RCGCGPIO|= PORTF_ENABLE ;
-    /*Set LEDs PiNs as output*/
-    GPIOF->DIR = PORTF_LEDS_DIR;
-    /*set LEDs PINS digital function*/
-    GPIOF->DEN = PORTF_LEDS_DEN;
-
 
     /*Configure SysTick*/
 
@@ -47,6 +45,22 @@ void SysTick_INIT(uint32_t Tick )
 }
 
 
+/******************** set_call_back() ************************
+*Parameters:
+*           I/P: Pointer To Function
+*           O/P: NOTHING
+*           I/O: NOTHING
+*Return: Nothing
+*Description: This function sets call back pointer to function
+              to equal the input pointer to function
+**************************************************************/
+void set_call_back(void(*ptr)(void))
+{
+    call_back=ptr;
+}
+
+
+
 /************************************************************************/
 /* Function: SysTickIntHandler                                          */
 /* @param: void                                                         */
@@ -56,8 +70,7 @@ void SysTick_INIT(uint32_t Tick )
 void
 SysTickIntHandler(void)
 {
-    /*Toggle LED*/
-    GPIOF->DATA^= TOGGLE_LED;
+    call_back();
 }
 
 
