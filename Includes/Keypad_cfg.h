@@ -39,5 +39,6 @@
 
 #define HIGH     1
 #define LOW     0x0
+#define ZERO    0
 
 #endif /* KEYPAD_CFG_H_ */

@@ -56,6 +56,7 @@ void Keypad_Init(void)
 
 uint8 key=0;
 
+
 /************************************************************************/
 /* Function: Keypad_Task                                                */
 /* @param: void                                                         */
@@ -72,19 +73,23 @@ uint8 Keypad_Task(void)
             /* Check if Row1 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW1_PIN))
             {
-                key='1';
+
+                key=NUM_1_CHAR;
                 return key;
+
             }
             /* Check if Row2 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW2_PIN))
             {
-                key='4';
+
+                key=NUM_4_CHAR;
                 return key;
             }
             /* Check if Row3 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW3_PIN))
             {
-                key='7';
+
+                key=NUM_7_CHAR;
                 return key;
             }
             /* Set Column2 to Low and others to High                                             */
@@ -94,20 +99,22 @@ uint8 Keypad_Task(void)
             /* Check if Row1 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW1_PIN))
             {
-                key='2';
+
+                key=NUM_2_CHAR;
                 return key;
             }
             /* Check if Row2 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW2_PIN))
             {
-                key='5';
+
+                key=NUM_5_CHAR;
                 return key;
             }
             /* Check if Row3 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW3_PIN))
             {
-                key='8';
-                return key;
+                    key=NUM_8_CHAR;
+                    return key;
             }
 
             /* Set Column3 to Low and others to High                                             */
@@ -117,22 +124,22 @@ uint8 Keypad_Task(void)
             /* Check if Row1 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW1_PIN))
             {
-                key='3';
+                key=NUM_3_CHAR;
                 return key;
             }
             /* Check if Row2 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW2_PIN))
             {
-                key='6';
+                key=NUM_6_CHAR;
                 return key;
             }
             /* Check if Row3 reads a value                                             */
             if(!GPIOPinRead(ROW_BASE_PORT,ROW3_PIN))
             {
-                key='9';
+                key=NUM_9_CHAR;
                 return key;
             }
-
+return ZERO;
 }
 
 
